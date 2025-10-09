@@ -26,10 +26,10 @@ const Hero = () => {
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-center mb-3 sm:mb-4 text-foreground px-4 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-center mb-4 sm:mb-6 text-foreground px-4 leading-tight"
         >
           <span className="block">Empowering Gig workers</span>
-          <span className="block mt-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient drop-shadow-sm">
+          <span className="block mt-3 sm:mt-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient drop-shadow-sm">
             Building fair opportunities
           </span>
         </motion.h1>
@@ -42,7 +42,7 @@ const Hero = () => {
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 px-4"
+          className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 px-4 leading-relaxed"
         >
           Your gateway to verified Gig work. Connect with opportunities, build trust, access financing, and grow with community support.
         </motion.p>
