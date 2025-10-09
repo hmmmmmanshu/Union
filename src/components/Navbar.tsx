@@ -36,9 +36,11 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center">
-              <span className="text-white font-bold text-xl">U</span>
-            </div>
+            <img 
+              src="/logo.jpeg" 
+              alt="Union Logo" 
+              className="h-8 w-8 rounded-lg object-cover"
+            />
             <span className="text-xl font-bold">Union</span>
           </Link>
 
