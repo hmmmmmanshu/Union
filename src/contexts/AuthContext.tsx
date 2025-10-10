@@ -74,6 +74,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (session?.user) {
         const role = await fetchUserRole(session.user.id);
         setUserRole(role);
+
+        // Handle email verification redirect
+        if (event === 'SIGNED_IN' && window.location.pathname === '/auth') {
+          const userRole = session.user.user_metadata?.role;
+          
+          // Check if this is a new user who just verified their email
+          if (userRole) {
+            toast.success('Email verified! Let\'s complete your profile.');
+            
+            // Redirect to appropriate onboarding
+            if (userRole === 'worker') {
+              navigate('/onboarding/worker');
+            } else if (userRole === 'employer') {
+              navigate('/onboarding/employer');
+            } else {
+              navigate('/');
+            }
+          }
+        }
       } else {
         setUserRole(null);
       }
@@ -95,6 +114,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       setLoading(true);
 
+      // Get the production URL or current origin
+      const redirectUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
       // Sign up the user with role in metadata (triggers will handle profile creation)
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -104,7 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             full_name: fullName,
             role: role, // This will be used by database trigger
           },
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: `${redirectUrl}/auth`,
         },
       });
 
@@ -118,14 +140,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         console.log('User created with automatic profile setup via trigger');
 
-        // Redirect to onboarding to complete profile
-        toast.success('Account created! Let\'s complete your profile.');
-        
-        // Redirect based on role
-        if (role === 'worker') {
-          navigate('/onboarding/worker');
-        } else if (role === 'employer') {
-          navigate('/onboarding/employer');
+        // Check if email confirmation is required
+        if (data.session) {
+          // User is auto-confirmed, redirect to onboarding
+          toast.success('Account created! Let\'s complete your profile.');
+          
+          if (role === 'worker') {
+            navigate('/onboarding/worker');
+          } else if (role === 'employer') {
+            navigate('/onboarding/employer');
+          }
+        } else {
+          // Email confirmation required
+          toast.success('Account created! Please check your email to verify your account.', {
+            duration: 6000,
+          });
+          
+          // Stay on auth page but switch to sign in tab
+          // The user will come back after email verification
         }
       }
     } catch (error: any) {

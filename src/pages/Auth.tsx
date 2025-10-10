@@ -45,8 +45,8 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center gradient-subtle px-4 py-12">
       <Card className="w-full max-w-md p-8 shadow-elevated">
         <div className="text-center mb-8">
-          <div className="inline-flex h-12 w-12 rounded-lg gradient-primary items-center justify-center mb-4">
-            <span className="text-white font-bold text-2xl">U</span>
+          <div className="inline-flex h-16 w-16 rounded-lg items-center justify-center mb-4">
+            <img src="/logo.jpeg" alt="Union Logo" className="h-16 w-16 object-contain rounded-lg" />
           </div>
           <h1 className="text-3xl font-bold">Welcome to Union</h1>
           <p className="text-muted-foreground mt-2">
