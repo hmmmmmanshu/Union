@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Search, Menu, User, X, LogOut, UserCircle } from "lucide-react";
+import { Search, Menu, User, X, LogOut, UserCircle, Shield } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
@@ -80,6 +80,14 @@ const Navbar = () => {
                     )}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  {userRole === 'admin' && (
+                    <>
+                      <DropdownMenuItem onClick={() => navigate('/admin')}>
+                        <Shield className="mr-2 h-4 w-4" />
+                        <span>Admin Dashboard</span>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuItem onClick={() => navigate('/profile')}>
                     <UserCircle className="mr-2 h-4 w-4" />
                     <span>Profile</span>
@@ -173,6 +181,19 @@ const Navbar = () => {
                           <p className="text-xs text-muted-foreground capitalize">{userRole}</p>
                         )}
                       </div>
+                      {userRole === 'admin' && (
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start"
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            navigate('/admin');
+                          }}
+                        >
+                          <Shield className="h-4 w-4 mr-2" />
+                          Admin Dashboard
+                        </Button>
+                      )}
                       <Button
                         variant="outline"
                         className="w-full justify-start"

@@ -118,16 +118,22 @@ const Auth = () => {
                   <div className="flex items-center space-x-2 flex-1">
                     <RadioGroupItem value="worker" id="worker" />
                     <Label htmlFor="worker" className="font-normal cursor-pointer">
-                      Gig Worker
+                      Service Provider
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2 flex-1">
                     <RadioGroupItem value="employer" id="employer" />
                     <Label htmlFor="employer" className="font-normal cursor-pointer">
-                      Employer
+                      Customer
                     </Label>
                   </div>
                 </RadioGroup>
+                <p className="text-xs text-muted-foreground">
+                  {userRole === 'worker' 
+                    ? 'Provide services and get work opportunities (requires approval)'
+                    : 'Browse and book trusted service providers'
+                  }
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -181,7 +187,7 @@ const Auth = () => {
                     Creating account...
                   </>
                 ) : (
-                  `Sign Up as ${userRole === 'worker' ? 'Worker' : 'Employer'}`
+                  `Sign Up as ${userRole === 'worker' ? 'Service Provider' : 'Customer'}`
                 )}
               </Button>
 

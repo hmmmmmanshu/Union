@@ -13,6 +13,8 @@ import WorkerProfile from "./pages/WorkerProfile";
 import EmployerProfile from "./pages/EmployerProfile";
 import WorkerOnboarding from "./pages/WorkerOnboarding";
 import EmployerOnboarding from "./pages/EmployerOnboarding";
+import AdminDashboard from "./pages/AdminDashboard";
+import PendingApproval from "./pages/PendingApproval";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/worker" element={<WorkerProfile />} />
             <Route path="/profile/employer" element={<EmployerProfile />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/pending-approval" element={<PendingApproval />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

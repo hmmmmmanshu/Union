@@ -1,92 +1,107 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import UnionFeatures from "@/components/UnionFeatures";
 import ProviderCard from "@/components/ProviderCard";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Loader2 } from "lucide-react";
+import type { Database } from "@/integrations/supabase/types";
+
+type Worker = Database['public']['Tables']['workers']['Row'] & {
+  skills?: Array<{ skill_name: string }>;
+  city?: { name: string; state: string } | null;
+};
 
 const Index = () => {
+  const [workers, setWorkers] = useState<Worker[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("all");
 
-  // Sample provider data with authentic Indian gig worker photos
-  const allProviders = [
-    {
-      id: "1",
-      name: "Priya Sharma",
-      service: "maid",
-      location: "Mumbai, Maharashtra",
-      rating: 4.9,
-      reviews: 127,
-      experience: 5,
-      verified: true,
-      imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop&crop=face",
-      priceRange: "₹8,000/mo",
-    },
-    {
-      id: "2",
-      name: "Rajesh Kumar",
-      service: "cook",
-      location: "Delhi, NCR",
-      rating: 4.8,
-      reviews: 94,
-      experience: 8,
-      verified: true,
-      imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=face",
-      priceRange: "₹12,000/mo",
-    },
-    {
-      id: "3",
-      name: "Amit Patel",
-      service: "driver",
-      location: "Bangalore, Karnataka",
-      rating: 4.9,
-      reviews: 156,
-      experience: 10,
-      verified: true,
-      imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=300&fit=crop&crop=face",
-      priceRange: "₹15,000/mo",
-    },
-    {
-      id: "4",
-      name: "Sneha Reddy",
-      service: "nanny",
-      location: "Hyderabad, Telangana",
-      rating: 5.0,
-      reviews: 82,
-      experience: 6,
-      verified: true,
-      imageUrl: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=300&fit=crop&crop=face",
-      priceRange: "₹10,000/mo",
-    },
-    {
-      id: "5",
-      name: "Lakshmi Iyer",
-      service: "maid",
-      location: "Chennai, Tamil Nadu",
-      rating: 4.7,
-      reviews: 68,
-      experience: 4,
-      verified: true,
-      imageUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=300&fit=crop&crop=face",
-      priceRange: "₹7,500/mo",
-    },
-    {
-      id: "6",
-      name: "Vikram Singh",
-      service: "driver",
-      location: "Pune, Maharashtra",
-      rating: 4.8,
-      reviews: 103,
-      experience: 7,
-      verified: true,
-      imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=300&fit=crop&crop=face",
-      priceRange: "₹14,000/mo",
-    },
-  ];
+  useEffect(() => {
+    loadApprovedWorkers();
+  }, []);
+
+  const loadApprovedWorkers = async () => {
+    try {
+      setLoading(true);
+
+      // Fetch only approved workers with their skills and city info
+      const { data: workersData, error: workersError } = await supabase
+        .from('workers')
+        .select(`
+          *,
+          city:cities (
+            name,
+            state
+          )
+        `)
+        .eq('approval_status', 'approved')
+        .order('created_at', { ascending: false });
+
+      if (workersError) throw workersError;
+
+      // Get skills for each worker
+      const workersWithSkills = await Promise.all(
+        (workersData || []).map(async (worker) => {
+          const { data: skillsData } = await supabase
+            .from('worker_skills')
+            .select(`
+              skill_id,
+              skills (name)
+            `)
+            .eq('worker_id', worker.id);
+
+          return {
+            ...worker,
+            skills: skillsData?.map(s => ({ 
+              skill_name: (s.skills as any)?.name || 'Unknown' 
+            })) || []
+          };
+        })
+      );
+
+      setWorkers(workersWithSkills);
+    } catch (error: any) {
+      console.error('Error loading workers:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Transform workers to provider format for the ProviderCard component
+  const allProviders = workers.map(worker => {
+    const primarySkill = worker.skills?.[0]?.skill_name?.toLowerCase() || 'service';
+    const location = worker.city 
+      ? `${worker.city.name}, ${worker.city.state}`
+      : worker.location_city && worker.location_state
+        ? `${worker.location_city}, ${worker.location_state}`
+        : 'India';
+    
+    // Generate a professional placeholder image based on the worker's name
+    const nameInitial = worker.full_name.charAt(0).toUpperCase();
+    const imageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(worker.full_name)}&size=400&background=random&color=fff&bold=true`;
+
+    return {
+      id: worker.id,
+      name: worker.full_name,
+      service: primarySkill,
+      location: location,
+      rating: Number(worker.average_rating) || 0,
+      reviews: worker.total_jobs_completed || 0,
+      experience: worker.years_of_experience || 0,
+      verified: worker.verified || false,
+      imageUrl: imageUrl,
+      priceRange: worker.monthly_rate 
+        ? `₹${Number(worker.monthly_rate).toLocaleString('en-IN')}/mo`
+        : worker.daily_rate
+          ? `₹${Number(worker.daily_rate).toLocaleString('en-IN')}/day`
+          : worker.hourly_rate
+            ? `₹${Number(worker.hourly_rate).toLocaleString('en-IN')}/hr`
+            : 'Contact for rates',
+    };
+  });
 
   // Filter providers
   const filteredProviders = allProviders.filter((provider) => {
@@ -120,6 +135,12 @@ const Index = () => {
       <section className="flex-1 py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
+            {loading ? (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <>
             <div className="mb-6 flex items-center justify-between">
               <p className="text-muted-foreground">
                 {filteredProviders.length} provider{filteredProviders.length !== 1 ? 's' : ''} available
@@ -135,9 +156,14 @@ const Index = () => {
             {filteredProviders.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-lg text-muted-foreground">
-                  No providers found matching your criteria. Try adjusting your search.
+                      {workers.length === 0 
+                        ? 'No approved providers yet. Check back soon!'
+                        : 'No providers found matching your criteria. Try adjusting your search.'
+                      }
                 </p>
               </div>
+                )}
+              </>
             )}
           </div>
         </div>

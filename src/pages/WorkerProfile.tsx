@@ -205,7 +205,13 @@ const WorkerProfile = () => {
       }
 
       toast.success('Profile updated successfully!');
-      navigate('/');
+      
+      // Check if worker needs approval
+      if (worker.approval_status === 'pending') {
+        navigate('/pending-approval');
+      } else {
+        navigate('/');
+      }
       
     } catch (error: any) {
       console.error('Error saving profile:', error);
