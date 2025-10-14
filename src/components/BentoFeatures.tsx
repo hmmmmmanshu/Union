@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import { BentoCard, BentoGrid } from "./ui/bento-grid";
+import { BentoGrid } from "./ui/bento-grid";
+import { BentoCard } from "./ui/bento-card";
 import {
   Users,
   Shield,
