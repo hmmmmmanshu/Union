@@ -12,66 +12,83 @@ const Profile = () => {
   const [checkingApproval, setCheckingApproval] = useState(false);
 
   useEffect(() => {
-    const checkWorkerApprovalStatus = async () => {
-      if (!user || !userRole) return;
-
-      // Check approval status for workers
-      if (userRole === 'worker' || userRole === 'both') {
-        setCheckingApproval(true);
-        try {
-          const { data: workerData } = await supabase
-            .from('workers')
-            .select('approval_status')
-            .eq('user_id', user.id)
-            .single();
-
-          if (workerData && workerData.approval_status === 'pending') {
-            console.log('Worker pending approval, redirecting');
-            navigate('/pending-approval', { replace: true });
-            return;
-          } else if (workerData && workerData.approval_status === 'rejected') {
-            console.log('Worker rejected, redirecting to pending screen');
-            navigate('/pending-approval', { replace: true });
-            return;
-          }
-        } catch (error) {
-          console.error('Error checking approval status:', error);
-        } finally {
-          setCheckingApproval(false);
-        }
-      }
-    };
-
     console.log('Profile router - loading:', loading, 'user:', user?.email, 'role:', userRole);
     
     if (!loading) {
       if (!user) {
         console.log('No user, redirecting to auth');
         navigate('/auth');
-      } else if (userRole === 'admin') {
+        return;
+      } 
+      
+      if (userRole === 'admin') {
         console.log('Redirecting to admin dashboard');
         navigate('/admin', { replace: true });
-      } else if (userRole === 'worker' || userRole === 'both') {
-        console.log('Checking worker approval status');
-        checkWorkerApprovalStatus();
-        if (!checkingApproval) {
-          console.log('Redirecting to worker profile');
-          navigate('/profile/worker', { replace: true });
-        }
-      } else if (userRole === 'employer') {
-        console.log('Redirecting to employer profile');
-        navigate('/profile/employer', { replace: true });
-      } else if (userRole === 'customer') {
+        return;
+      }
+      
+      if (userRole === 'customer') {
         console.log('Customer role, redirecting to home');
         navigate('/', { replace: true });
-      } else {
-        // User exists but role is still null - might be fetching
-        console.log('User exists but role is null');
-        toast.error('Unable to determine user type. Please sign in again.');
-        navigate('/auth');
+        return;
       }
+      
+      if (userRole === 'employer') {
+        console.log('Redirecting to employer profile');
+        navigate('/profile/employer', { replace: true });
+        return;
+      }
+      
+      if (userRole === 'worker' || userRole === 'both') {
+        console.log('Checking worker approval status');
+        checkWorkerApprovalStatus();
+        return;
+      }
+      
+      if (userRole === null) {
+        // User exists but role is still null - might be fetching
+        console.log('User exists but role is null, waiting...');
+        return;
+      }
+      
+      // Fallback for any other case
+      console.log('Unknown user role, redirecting to home');
+      navigate('/', { replace: true });
     }
   }, [user, userRole, loading, navigate]);
+
+  const checkWorkerApprovalStatus = async () => {
+    if (!user) return;
+
+    setCheckingApproval(true);
+    try {
+      const { data: workerData } = await supabase
+        .from('workers')
+        .select('approval_status')
+        .eq('user_id', user.id)
+        .single();
+
+      if (workerData && workerData.approval_status === 'pending') {
+        console.log('Worker pending approval, redirecting');
+        navigate('/pending-approval', { replace: true });
+        return;
+      } else if (workerData && workerData.approval_status === 'rejected') {
+        console.log('Worker rejected, redirecting to pending screen');
+        navigate('/pending-approval', { replace: true });
+        return;
+      } else {
+        // Approved or no worker data, go to worker profile
+        console.log('Redirecting to worker profile');
+        navigate('/profile/worker', { replace: true });
+      }
+    } catch (error) {
+      console.error('Error checking approval status:', error);
+      // On error, redirect to worker profile
+      navigate('/profile/worker', { replace: true });
+    } finally {
+      setCheckingApproval(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">

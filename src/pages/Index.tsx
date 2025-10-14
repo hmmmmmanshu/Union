@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import UnionFeatures from "@/components/UnionFeatures";
+import BentoFeatures from "@/components/BentoFeatures";
 import ProviderCard from "@/components/ProviderCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
@@ -129,7 +129,7 @@ const Index = () => {
       <Hero />
 
       {/* Union Features Section */}
-      <UnionFeatures />
+      <BentoFeatures />
 
       {/* Providers Grid */}
       <section className="flex-1 py-8">
