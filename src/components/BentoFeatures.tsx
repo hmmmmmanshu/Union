@@ -16,6 +16,87 @@ import {
   Heart,
 } from "lucide-react";
 
+const features = [
+  {
+    Icon: MapPin,
+    name: "Job Aggregation",
+    description: "Access opportunities from 50+ platforms through one interface",
+    href: "#",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-1",
+    background: (
+      <div className="absolute top-4 right-4 h-20 w-20 bg-primary/10 rounded-full flex items-center justify-center">
+        <MapPin className="h-8 w-8 text-primary" />
+      </div>
+    ),
+  },
+  {
+    Icon: Shield,
+    name: "Trust System",
+    description: "Build credibility through worker-verified ratings and Trust Circles",
+    href: "#",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-2",
+    background: (
+      <div className="absolute top-4 right-4 h-20 w-20 bg-green-500/10 rounded-full flex items-center justify-center">
+        <CheckCircle className="h-8 w-8 text-green-500" />
+      </div>
+    ),
+  },
+  {
+    Icon: CreditCard,
+    name: "Zero Commission",
+    description: "Keep 100% of your earnings with our flat subscription model",
+    href: "#",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-2",
+    background: (
+      <div className="absolute top-4 right-4 h-20 w-20 bg-accent/10 rounded-full flex items-center justify-center">
+        <IndianRupee className="h-8 w-8 text-accent" />
+      </div>
+    ),
+  },
+  {
+    Icon: TrendingUp,
+    name: "Financial Growth",
+    description: "Access loans, equipment financing, and investment opportunities",
+    className: "col-span-3 lg:col-span-1",
+    href: "#",
+    cta: "Learn more",
+    background: (
+      <div className="absolute top-4 right-4 h-20 w-20 bg-blue-500/10 rounded-full flex items-center justify-center">
+        <TrendingUp className="h-8 w-8 text-blue-500" />
+      </div>
+    ),
+  },
+  {
+    Icon: Users,
+    name: "Community Hub",
+    description: "Connect with 50,000+ verified workers and build lasting relationships",
+    href: "#",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-2",
+    background: (
+      <div className="absolute top-4 right-4 h-20 w-20 bg-purple-500/10 rounded-full flex items-center justify-center">
+        <Users className="h-8 w-8 text-purple-500" />
+      </div>
+    ),
+  },
+  {
+    Icon: Target,
+    name: "Direct Bidding",
+    description: "Set your own rates and compete on quality, not just price",
+    href: "#",
+    cta: "Learn more",
+    className: "col-span-3 lg:col-span-1",
+    background: (
+      <div className="absolute top-4 right-4 h-20 w-20 bg-red-500/10 rounded-full flex items-center justify-center">
+        <Target className="h-8 w-8 text-red-500" />
+      </div>
+    ),
+  },
+];
+
 const BentoFeatures = () => {
   return (
     <section className="py-16 px-4 bg-background">
@@ -32,77 +113,9 @@ const BentoFeatures = () => {
 
         {/* Bento Grid */}
         <BentoGrid>
-          <BentoCard
-            name="Job Aggregation"
-            description="Access opportunities from 50+ platforms through one interface"
-            Icon={MapPin}
-            className="col-span-3 lg:col-span-1"
-            background={
-              <div className="absolute top-4 right-4 h-20 w-20 bg-primary/10 rounded-full flex items-center justify-center">
-                <MapPin className="h-8 w-8 text-primary" />
-              </div>
-            }
-          />
-          
-          <BentoCard
-            name="Trust System"
-            description="Build credibility through worker-verified ratings and Trust Circles"
-            Icon={Shield}
-            className="col-span-3 lg:col-span-2"
-            background={
-              <div className="absolute top-4 right-4 h-20 w-20 bg-green-500/10 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-8 w-8 text-green-500" />
-              </div>
-            }
-          />
-          
-          <BentoCard
-            name="Zero Commission"
-            description="Keep 100% of your earnings with our flat subscription model"
-            Icon={CreditCard}
-            className="col-span-3 lg:col-span-2"
-            background={
-              <div className="absolute top-4 right-4 h-20 w-20 bg-accent/10 rounded-full flex items-center justify-center">
-                <IndianRupee className="h-8 w-8 text-accent" />
-              </div>
-            }
-          />
-          
-          <BentoCard
-            name="Financial Growth"
-            description="Access loans, equipment financing, and investment opportunities"
-            Icon={TrendingUp}
-            className="col-span-3 lg:col-span-1"
-            background={
-              <div className="absolute top-4 right-4 h-20 w-20 bg-blue-500/10 rounded-full flex items-center justify-center">
-                <TrendingUp className="h-8 w-8 text-blue-500" />
-              </div>
-            }
-          />
-          
-          <BentoCard
-            name="Community Hub"
-            description="Connect with 50,000+ verified workers and build lasting relationships"
-            Icon={Users}
-            className="col-span-3 lg:col-span-2"
-            background={
-              <div className="absolute top-4 right-4 h-20 w-20 bg-purple-500/10 rounded-full flex items-center justify-center">
-                <Users className="h-8 w-8 text-purple-500" />
-              </div>
-            }
-          />
-          
-          <BentoCard
-            name="Direct Bidding"
-            description="Set your own rates and compete on quality, not just price"
-            Icon={Target}
-            className="col-span-3 lg:col-span-1"
-            background={
-              <div className="absolute top-4 right-4 h-20 w-20 bg-red-500/10 rounded-full flex items-center justify-center">
-                <Target className="h-8 w-8 text-red-500" />
-              </div>
-            }
-          />
+          {features.map((feature, idx) => (
+            <BentoCard key={idx} {...feature} />
+          ))}
         </BentoGrid>
 
         {/* Stats Bar */}
