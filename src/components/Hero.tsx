@@ -26,10 +26,10 @@ const Hero = () => {
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-center mb-4 sm:mb-6 text-foreground px-4 leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-center mb-4 sm:mb-6 text-foreground px-4 leading-tight max-w-4xl mx-auto"
         >
           <span className="block">Empowering Gig workers</span>
-          <span className="block mt-3 sm:mt-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient drop-shadow-sm">
+          <span className="block mt-3 sm:mt-4 bg-gradient-to-r from-[hsl(20_92%_62%)] via-[hsl(32_94%_64%)] to-[hsl(8_85%_58%)] bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient drop-shadow-sm text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
             Building fair opportunities
           </span>
         </motion.h1>

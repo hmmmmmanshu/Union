@@ -6,6 +6,13 @@ import ProviderCard from "@/components/ProviderCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Worker = Database['public']['Tables']['workers']['Row'] & {
   skills?: Array<{ skill_name: string }>;
@@ -121,6 +128,8 @@ const Index = () => {
     return matchesSearch && matchesService && matchesLocation;
   });
 
+  const showcaseImages = ["/1.png", "/2.png", "/3.png", "/4.png", "/5.png"];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -130,6 +139,41 @@ const Index = () => {
 
       {/* Union Features Section */}
       <BentoFeatures />
+
+      {/* Showcase Slider */}
+      <section className="bg-muted/40 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-6 text-center">
+              <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
+                A Platform Powered by Working Hands
+              </h2>
+              <p className="mt-2 text-sm md:text-base text-muted-foreground">
+                Stories of skill, dignity, and shared progress from across the Union network.
+              </p>
+            </div>
+            <Carousel className="relative max-w-2xl mx-auto">
+              <CarouselContent>
+                {showcaseImages.map((src) => (
+                  <CarouselItem key={src} className="pl-0 md:pl-4">
+                    <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft mx-auto">
+                      <div className="w-full aspect-[4/3] md:aspect-[3/2]">
+                        <img
+                          src={src}
+                          alt="Union community moment"
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
+          </div>
+        </div>
+      </section>
 
       {/* Providers Grid */}
       <section className="flex-1 py-8">

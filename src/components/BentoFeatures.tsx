@@ -1,6 +1,3 @@
-import { cn } from "@/lib/utils";
-import { BentoGrid } from "./ui/bento-grid";
-import { BentoCard } from "./ui/bento-card";
 import {
   Users,
   Shield,
@@ -8,96 +5,43 @@ import {
   MapPin,
   TrendingUp,
   Target,
-  CheckCircle,
-  ArrowRight,
-  Star,
   IndianRupee,
-  Briefcase,
-  Heart,
 } from "lucide-react";
 
-const features = [
-  {
-    Icon: MapPin,
-    name: "Job Aggregation",
-    description: "Access opportunities from 50+ platforms through one interface",
-    href: "#",
-    cta: "Learn more",
-    className: "col-span-3 lg:col-span-1",
-    background: (
-      <div className="absolute top-4 right-4 h-20 w-20 bg-primary/10 rounded-full flex items-center justify-center">
-        <MapPin className="h-8 w-8 text-primary" />
-      </div>
-    ),
-  },
-  {
-    Icon: Shield,
-    name: "Trust System",
-    description: "Build credibility through worker-verified ratings and Trust Circles",
-    href: "#",
-    cta: "Learn more",
-    className: "col-span-3 lg:col-span-2",
-    background: (
-      <div className="absolute top-4 right-4 h-20 w-20 bg-green-500/10 rounded-full flex items-center justify-center">
-        <CheckCircle className="h-8 w-8 text-green-500" />
-      </div>
-    ),
-  },
-  {
-    Icon: CreditCard,
-    name: "Zero Commission",
-    description: "Keep 100% of your earnings with our flat subscription model",
-    href: "#",
-    cta: "Learn more",
-    className: "col-span-3 lg:col-span-2",
-    background: (
-      <div className="absolute top-4 right-4 h-20 w-20 bg-accent/10 rounded-full flex items-center justify-center">
-        <IndianRupee className="h-8 w-8 text-accent" />
-      </div>
-    ),
-  },
-  {
-    Icon: TrendingUp,
-    name: "Financial Growth",
-    description: "Access loans, equipment financing, and investment opportunities",
-    className: "col-span-3 lg:col-span-1",
-    href: "#",
-    cta: "Learn more",
-    background: (
-      <div className="absolute top-4 right-4 h-20 w-20 bg-blue-500/10 rounded-full flex items-center justify-center">
-        <TrendingUp className="h-8 w-8 text-blue-500" />
-      </div>
-    ),
-  },
-  {
-    Icon: Users,
-    name: "Community Hub",
-    description: "Connect with 50,000+ verified workers and build lasting relationships",
-    href: "#",
-    cta: "Learn more",
-    className: "col-span-3 lg:col-span-2",
-    background: (
-      <div className="absolute top-4 right-4 h-20 w-20 bg-purple-500/10 rounded-full flex items-center justify-center">
-        <Users className="h-8 w-8 text-purple-500" />
-      </div>
-    ),
-  },
-  {
-    Icon: Target,
-    name: "Direct Bidding",
-    description: "Set your own rates and compete on quality, not just price",
-    href: "#",
-    cta: "Learn more",
-    className: "col-span-3 lg:col-span-1",
-    background: (
-      <div className="absolute top-4 right-4 h-20 w-20 bg-red-500/10 rounded-full flex items-center justify-center">
-        <Target className="h-8 w-8 text-red-500" />
-      </div>
-    ),
-  },
-];
-
 const BentoFeatures = () => {
+  const features = [
+    {
+      name: "Job Aggregation",
+      description: "Access opportunities from 50+ platforms through one interface.",
+      Icon: MapPin,
+    },
+    {
+      name: "Trust System",
+      description: "Build credibility through worker-verified ratings and Trust Circles.",
+      Icon: Shield,
+    },
+    {
+      name: "Zero Commission",
+      description: "Keep 100% of your earnings with our flat subscription model.",
+      Icon: CreditCard,
+    },
+    {
+      name: "Financial Growth",
+      description: "Access loans, equipment financing, and investment opportunities.",
+      Icon: TrendingUp,
+    },
+    {
+      name: "Community Hub",
+      description: "Connect with 50,000+ verified workers and build lasting relationships.",
+      Icon: Users,
+    },
+    {
+      name: "Direct Bidding",
+      description: "Set your own rates and compete on quality, not just price.",
+      Icon: Target,
+    },
+  ];
+
   return (
     <section className="py-16 px-4 bg-background">
       <div className="container mx-auto max-w-7xl">
@@ -111,12 +55,23 @@ const BentoFeatures = () => {
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <BentoGrid>
-          {features.map((feature, idx) => (
-            <BentoCard key={idx} {...feature} />
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+          {features.map(({ name, description, Icon }) => (
+            <div
+              key={name}
+              className="rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:shadow-md"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">{name}</h3>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+            </div>
           ))}
-        </BentoGrid>
+        </div>
 
         {/* Stats Bar */}
         <div className="max-w-4xl mx-auto mt-16">

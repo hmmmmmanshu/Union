@@ -33,9 +33,9 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="grid h-16 grid-cols-[auto_1fr_auto] items-center gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
             <img 
               src="/logo.jpeg" 
               alt="Union Logo" 
@@ -45,7 +45,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-6 justify-center md:pl-12 lg:pl-20">
             <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
               Browse
             </Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 justify-end">
             <Link to="/providers">
               <Button variant="ghost" size="icon" className="hidden md:flex">
                 <Search className="h-5 w-5" />
