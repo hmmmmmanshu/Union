@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { HighlightText } from "./ui/HighlightText";
 import { SectionHeading } from "./ui/SectionHeading";
 import { SectionTag } from "./ui/SectionTag";
@@ -9,6 +10,7 @@ const testimonials = [
       "Union helped us find reliable household support without the usual stress. The experience feels smooth, trustworthy, and thoughtfully designed.",
     name: "Lalit Gautam",
     role: "Founder @ Sensegrass",
+    avatar: "/images/reviewer-lalit.png",
     tall: true,
   },
   {
@@ -17,6 +19,7 @@ const testimonials = [
       "Union fosters a more human approach to services, empowering workers to grow confidently.",
     name: "Aritra Banerjee",
     role: "UX Designer @ Sensegrass",
+    avatar: "/images/reviewer-aritra.png",
     tall: false,
   },
   {
@@ -25,6 +28,7 @@ const testimonials = [
       "From scheduling to support, the ecosystem feels incredibly polished. Union genuinely simplifies modern living.",
     name: "Ayashi Das Majumder",
     role: "COO @ Sensegrass",
+    avatar: "/images/reviewer-ayashi.png",
     tall: false,
   },
   {
@@ -33,6 +37,7 @@ const testimonials = [
       "Finding verified professionals is now effortless and feels modern, transparent, and reliable.",
     name: "Prajjwal Shukla",
     role: "Trainer @ MPSeDC",
+    avatar: "/images/reviewer-prajjwal.png",
     tall: false,
   },
   {
@@ -41,6 +46,7 @@ const testimonials = [
       "Union makes everyday service management feel effortless while maintaining a high level of trust and professionalism.",
     name: "Rahul Gundala",
     role: "VP Technology @ Union",
+    avatar: "/images/reviewer-rahul.png",
     tall: false,
   },
   {
@@ -49,6 +55,7 @@ const testimonials = [
       "The platform makes managing everyday services incredibly simple. From bookings to updates, everything feels seamless.",
     name: "Meenakshy Panicker",
     role: "CEO @ Instafarm",
+    avatar: "/images/reviewer-meenakshy.png",
     tall: true,
   },
   {
@@ -57,6 +64,7 @@ const testimonials = [
       "The experience feels incredibly smooth — from discovering services to managing everything through the app.",
     name: "Himanshu Goswami",
     role: "Developer @ Union",
+    avatar: "/images/reviewer-himanshu.png",
     tall: false,
   },
 ];
@@ -66,12 +74,14 @@ function TestimonialCard({
   quote,
   name,
   role,
+  avatar,
   tall = false,
 }: {
   title: React.ReactNode;
   quote: string;
   name: string;
   role: string;
+  avatar: string;
   tall?: boolean;
 }) {
   return (
@@ -81,8 +91,8 @@ function TestimonialCard({
       <h3 className="text-base font-bold leading-snug text-[#3d3428]">{title}</h3>
       <p className="mt-3 flex-1 text-sm leading-relaxed text-[#7a756d]">&ldquo;{quote}&rdquo;</p>
       <div className="mt-5 flex items-center gap-3 border-t border-[#ebe8e4]/60 pt-4">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-union-orange/15 text-sm font-bold text-union-orange">
-          {name.charAt(0)}
+        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[10px]">
+          <Image src={avatar} alt={name} fill className="object-cover" sizes="40px" />
         </div>
         <div>
           <div className="text-sm font-semibold text-union-orange">{name}</div>
