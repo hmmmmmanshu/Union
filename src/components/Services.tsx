@@ -1,14 +1,44 @@
-import Image from "next/image";
 import { SectionHeading } from "./ui/SectionHeading";
 import { SectionTag } from "./ui/SectionTag";
+import { ServiceCard } from "./ui/ServiceCard";
 
 const services = [
-  { image: "/images/figma-card-plumber.png", title: "Plumbing Services" },
-  { image: "/images/figma-card-cab.png", title: "Cab Driver Services" },
-  { image: "/images/figma-card-maid.png", title: "Maid Services" },
-  { image: "/images/figma-card-auto.png", title: "Auto Driver Services" },
-  { image: "/images/figma-card-construction.png", title: "Construction Worker Services" },
-  { image: "/images/figma-card-delivery.png", title: "Delivery Partner Services" },
+  {
+    title: "Plumbing Services",
+    description:
+      "Reliable plumbing support for repairs, fittings, leak fixes, and everyday household maintenance.",
+    character: "/images/char-plumber-only.png",
+  },
+  {
+    title: "Cab Driver Services",
+    description:
+      "Safe and dependable driver services for local travel, pickups, and daily commute needs.",
+    character: "/images/char-cab-only.png",
+  },
+  {
+    title: "Maid Services",
+    description:
+      "Everyday household assistance designed around comfort, cleanliness, and reliable support.",
+    character: "/images/char-maid-only.png",
+  },
+  {
+    title: "Auto Driver Services",
+    description:
+      "Verified auto drivers available for quick local transportation and daily travel support.",
+    character: "/images/char-auto-only.png",
+  },
+  {
+    title: "Construction Worker Services",
+    description:
+      "Skilled workers for home projects, repairs, maintenance, and construction support.",
+    character: "/images/char-construction-only.png",
+  },
+  {
+    title: "Delivery Partner Services",
+    description:
+      "Reliable delivery support for groceries, parcels, documents, and everyday essentials.",
+    character: "/images/char-delivery-only.png",
+  },
 ];
 
 export function Services() {
@@ -27,19 +57,7 @@ export function Services() {
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <div
-              key={service.title}
-              className="overflow-hidden rounded-[32px] border border-[#e8e5e1] shadow-[0_2px_16px_rgba(61,52,40,0.04)]"
-            >
-              <Image
-                src={service.image}
-                alt={service.title}
-                width={410}
-                height={300}
-                className="h-auto w-full"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-            </div>
+            <ServiceCard key={service.title} {...service} />
           ))}
         </div>
 
