@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --union-orange: #e8734a;
+  --union-orange-dark: #d45a32;
+  --union-orange-light: #f5a88a;
+  --union-cream: #faf8f5;
+  --union-cream-dark: #f5f0eb;
+  --union-dark: #3d3428;
+  --union-gray: #7a756d;
+  --union-gray-light: #a8a29e;
+  --union-border: #ebe8e4;
+  --union-card: #f5f3f0;
+  --background: #faf8f5;
+  --foreground: #3d3428;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-union-orange: var(--union-orange);
+  --color-union-orange-dark: var(--union-orange-dark);
+  --color-union-orange-light: var(--union-orange-light);
+  --color-union-cream: var(--union-cream);
+  --color-union-cream-dark: var(--union-cream-dark);
+  --color-union-dark: var(--union-dark);
+  --color-union-gray: var(--union-gray);
+  --color-union-gray-light: var(--union-gray-light);
+  --color-union-border: var(--union-border);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.section-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.section-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(232, 115, 74, 0.12);
+  color: var(--union-orange);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-heading {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--union-dark);
+}
+
+.section-heading em {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--union-orange);
+}
+
+.card-shadow {
+  box-shadow: 0 4px 24px rgba(232, 115, 74, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.gradient-hero {
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 80%,
+    rgba(232, 115, 74, 0.25) 0%,
+    rgba(255, 249, 245, 0) 70%
+  );
+}
+
+.gradient-card {
+  background: linear-gradient(135deg, #fff9f5 0%, #fff0e8 100%);
 }
