@@ -7,37 +7,37 @@ const services = [
     title: "Plumbing Services",
     description:
       "Reliable plumbing support for repairs, fittings, leak fixes, and everyday household maintenance.",
-    character: "/images/char-plumber-only.png",
+    character: "/images/char-plumber.png",
   },
   {
     title: "Cab Driver Services",
     description:
       "Safe and dependable driver services for local travel, pickups, and daily commute needs.",
-    character: "/images/char-cab-only.png",
+    character: "/images/char-cab.png",
   },
   {
     title: "Maid Services",
     description:
       "Everyday household assistance designed around comfort, cleanliness, and reliable support.",
-    character: "/images/char-maid-only.png",
+    character: "/images/char-maid.png",
   },
   {
     title: "Auto Driver Services",
     description:
       "Verified auto drivers available for quick local transportation and daily travel support.",
-    character: "/images/char-auto-only.png",
+    character: "/images/char-auto.png",
   },
   {
     title: "Construction Worker Services",
     description:
       "Skilled workers for home projects, repairs, maintenance, and construction support.",
-    character: "/images/char-construction-only.png",
+    character: "/images/char-construction.png",
   },
   {
     title: "Delivery Partner Services",
     description:
       "Reliable delivery support for groceries, parcels, documents, and everyday essentials.",
-    character: "/images/char-delivery-only.png",
+    character: "/images/char-delivery.png",
   },
 ];
 

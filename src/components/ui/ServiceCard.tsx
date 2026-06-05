@@ -8,10 +8,10 @@ interface ServiceCardProps {
 
 export function ServiceCard({ title, description, character }: ServiceCardProps) {
   return (
-    <div className="group relative h-[300px] overflow-hidden rounded-[32px] border border-[#e8e5e1] bg-[#f8f6f3]">
-      <div className="pointer-events-none absolute -right-6 -bottom-10 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(232,115,74,0.32)_0%,rgba(253,232,216,0.15)_45%,transparent_72%)]" />
+    <div className="group relative h-[300px] overflow-hidden rounded-[32px] border border-[#e8e5e1] bg-gradient-to-br from-[#faf8f5] via-[#f6f3f0] to-[#f9ebe0]">
+      <div className="pointer-events-none absolute -right-4 bottom-0 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle,rgba(232,115,74,0.38)_0%,rgba(253,232,216,0.2)_40%,transparent_70%)]" />
 
-      <div className="relative z-10 flex h-full flex-col p-7 pr-[46%]">
+      <div className="relative z-20 flex h-full w-[56%] flex-col p-7">
         <h3 className="text-[22px] font-bold leading-[1.2] tracking-[-0.01em] text-[#3d3428]">
           {title}
         </h3>
@@ -29,13 +29,13 @@ export function ServiceCard({ title, description, character }: ServiceCardProps)
         </button>
       </div>
 
-      <div className="absolute right-0 bottom-0 h-full w-[50%]">
+      <div className="pointer-events-none absolute -right-1 bottom-0 z-10 h-[98%] w-[48%]">
         <Image
           src={character}
           alt=""
           fill
-          className="object-contain object-bottom"
-          sizes="(max-width: 1024px) 45vw, 210px"
+          className="object-contain object-right-bottom"
+          sizes="210px"
         />
       </div>
     </div>
