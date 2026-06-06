@@ -8,7 +8,7 @@ const navLinks = [
   { label: "Our Model", href: "#mission" },
   { label: "Services", href: "#services" },
   { label: "User Stories", href: "#testimonials" },
-  { label: "Why Union", href: "#how-it-works" },
+  { label: "Why Union", href: "#why-union" },
   { label: "FAQs", href: "#faq" },
 ];
 
